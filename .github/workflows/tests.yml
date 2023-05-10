@@ -6,10 +6,8 @@ on:
   pull_request:
 jobs:
   test-bot:
-    strategy:
-      matrix:
-        os: [ubuntu-22.04, macos-12]
-    runs-on: ${{ matrix.os }}
+    # Only support macos for now, instead of matrix os of ubuntu-22.04, macos-12
+    runs-on: macos-12
     steps:
       - name: Set up Homebrew
         id: set-up-homebrew
