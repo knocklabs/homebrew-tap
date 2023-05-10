@@ -8,6 +8,11 @@ class Groot < Formula
   sha256 "38bb137bce626f85934f62fdd5c976a3f9b5a044568f4f5d269e8a3272be46d7"
   license ""
 
+  bottle do
+    root_url "https://github.com/knocklabs/homebrew-tap/releases/download/groot-64"
+    sha256 cellar: :any_skip_relocation, monterey: "aadbe69513c1b4bf83358fac158cca44097b42d158176bb0f366be3b2364d4c0"
+  end
+
   def install
     inreplace "bin/groot", /^CLIENT_HOME=/, "export GROOT_OCLIF_CLIENT_HOME=#{lib/"client"}\nCLIENT_HOME="
     libexec.install Dir["*"]
