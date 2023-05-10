@@ -1,7 +1,5 @@
-# Documentation: https://docs.brew.sh/Formula-Cookbook
-#                https://rubydoc.brew.sh/Formula
-
-# Reference: https://github.com/twilio/homebrew-brew/blob/main/Formula/twilio.rb
+# Reference:
+# https://github.com/twilio/homebrew-brew/blob/main/Formula/twilio.rb
 
 require "language/node"
 
