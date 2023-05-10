@@ -4,8 +4,8 @@
 class Groot < Formula
   desc "I am Groot!"
   homepage "https://github.com/knocklabs/knock-groot"
-  url "https://github.com/knocklabs/knock-groot/releases/download/v0.0.4/groot-v0.0.4-1bb504f-darwin-x64.tar.gz"
-  sha256 "8a77673c95dc566af5f3ad846589c5c6166d5dfcaa1b803e992da034cf9fa73e"
+  url "https://github.com/knocklabs/knock-groot/releases/download/v0.0.5/groot-v0.0.5-darwin-x64.tar.gz"
+  sha256 "38bb137bce626f85934f62fdd5c976a3f9b5a044568f4f5d269e8a3272be46d7"
   license ""
 
   def install
