@@ -19,6 +19,6 @@ class Groot < Formula
   end
 
   test do
-    system bin/"groot", "version"
+    system bin/"groot", "--version"
   end
 end
