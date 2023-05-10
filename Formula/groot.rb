@@ -6,8 +6,7 @@ require "language/node"
 class Groot < Formula
   desc "I am Groot!"
   homepage "https://github.com/knocklabs/knock-groot"
-  url "https://github.com/knocklabs/knock-groot/archive/v0.0.1.tar.gz"
-  sha256 "a60820001f8e87a7cb524a72f5e16a80a2e6236ba1956dd0b540fee17392cde0"
+  url "https://github.com/knocklabs/knock-groot/releases/download/v0.0.4/groot-v0.0.4-1bb504f-darwin-x64.tar.gz"
 
   depends_on "node"
 
