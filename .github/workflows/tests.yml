@@ -1,12 +1,14 @@
 name: brew test-bot
+
 on:
   push:
     branches:
       - main
   pull_request:
+
 jobs:
   test-bot:
-    # Only support macos for now, instead of matrix os of ubuntu-22.04, macos-12
+    # Only support macos for now, instead of both ubuntu-22.04 and macos-12.
     runs-on: macos-12
     steps:
       - name: Set up Homebrew
@@ -15,7 +17,7 @@ jobs:
 
       - name: Cache Homebrew Bundler RubyGems
         id: cache
-        uses: actions/cache@v1
+        uses: actions/cache@v3
         with:
           path: ${{ steps.set-up-homebrew.outputs.gems-path }}
           key: ${{ runner.os }}-rubygems-${{ steps.set-up-homebrew.outputs.gems-hash }}
@@ -40,3 +42,7 @@ jobs:
         with:
           name: bottles
           path: '*.bottle.*'
+
+      - name: Add a label to kick off publishing
+        if: github.event_name == 'pull_request' && startsWith(github.event.pull_request.title, 'release:')
+        run: gh pr edit ${{ github.event.pull_request.number }} --add-label pr-pull
