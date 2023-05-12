@@ -49,6 +49,9 @@ jobs:
         with:
           username: thomaswhyyou
 
+      - run: git config user.email
+      - run: git config user.name
+
       # - run: git config --global user.email "thomaswhyyou@gmail.com"
       # - run: git config --global user.name "thomaswhyyou"
 
