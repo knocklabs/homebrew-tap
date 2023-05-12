@@ -50,7 +50,7 @@ jobs:
       # - name: Update
       #   run:
 
-      - run: git commit -am 'release: ${FORMULA} ${VERSION}'
+      - run: git commit -am "release: ${FORMULA} ${VERSION}"
 
       - name: Set up git user config
         uses: Homebrew/actions/git-user-config@master
