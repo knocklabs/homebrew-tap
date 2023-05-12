@@ -1,7 +1,7 @@
 # Reference:
 # https://github.com/twilio/homebrew-brew/blob/main/Formula/twilio.rb
 
-class Groot < Formula
+class grootAT0029 < Formula
   desc "I am Groot!"
   homepage "https://github.com/knocklabs/knock-groot"
   url "https://github.com/knocklabs/knock-groot/releases/download/v0.0.29/groot-v0.0.29-10dfca2-darwin-x64.tar.gz"
