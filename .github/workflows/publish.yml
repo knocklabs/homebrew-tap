@@ -29,8 +29,9 @@ jobs:
           CURR_VER=$(echo $CURR_URL | gawk 'match($0, /v([0-9]+\.[0-9]+\.[0-9]+)/, m) { print m[1] }')
           mv ./Formula/${FORMULA}.rb ./Formula/${FORMULA}@${CURR_VER}.rb
 
-      # - run: ls -la ./Formula
       - run: git restore --source release Formula/${FORMULA}.rb
+
+      - run: git commit -am '${FORMULA} ${VERSION}'
 
       # - run: ls -la ./Formula
 
@@ -50,7 +51,6 @@ jobs:
       # - name: Update
       #   run:
 
-      - run: git commit -am "release: ${FORMULA} ${VERSION}"
 
       - name: Set up git user config
         uses: Homebrew/actions/git-user-config@master
