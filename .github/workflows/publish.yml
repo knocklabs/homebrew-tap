@@ -41,8 +41,8 @@ jobs:
       - name: Set up git user config
         uses: Homebrew/actions/git-user-config@master
 
-      - name: Commit changes
-        run: git commit -am "${FORMULA} ${VERSION}"
+      - run: git add .
+      - run: git commit -m "${FORMULA} ${VERSION}"
 
       - name: Push commits
         uses: Homebrew/actions/git-try-push@master
