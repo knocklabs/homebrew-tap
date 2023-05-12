@@ -35,7 +35,7 @@ jobs:
 
       - run: brew test-bot --only-formulae
 
-      - name: Kick off publish workflow, if applicable
+      - name: Kick off publish workflow
         if: startsWith(github.event.pull_request.title, 'release:')
         run: |
           FORMULA=$(echo '${{ github.event.pull_request.title }}' | gawk -F ' ' '{print $2}')
