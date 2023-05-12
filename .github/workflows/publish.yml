@@ -5,6 +5,10 @@ on:
     inputs:
       branch:
         required: true
+      formula:
+        required: true
+      version:
+        required: true
 
 jobs:
   publish:
