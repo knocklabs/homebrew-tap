@@ -23,30 +23,17 @@ jobs:
       - name: Fetch release branch
         run: git fetch origin ${BRANCH}:release --depth 1
 
-      - name: Version the late version
+      - name: Pin the current version
         run: |
           CURR_URL=$(git show main:Formula/${FORMULA}.rb | gawk '/^ *url/ {print $2}')
           CURR_VER=$(echo $CURR_URL | gawk 'match($0, /v([0-9]+\.[0-9]+\.[0-9]+)/, m) { print m[1] }')
-          git mv --f ./Formula/${FORMULA}.rb ./Formula/${FORMULA}@${CURR_VER}.rb
+          cp --f ./Formula/${FORMULA}.rb ./Formula/${FORMULA}@${CURR_VER}.rb
 
-      - run: git checkout release Formula/${FORMULA}.rb
-
-      - run: ls -la
+      - name: Set the new version
+        run: git restore --source release Formula/${FORMULA}.rb
 
       # - run: git branch --show
       # - run: git branch
-
-        # - run: git checkout ${{ github.event.inputs.branch }}
-      # - run: echo "${{ github.event.inputs.branch }}"
-
-      # - run: |
-      #     FORMULA=$(echo 'release: groot 0.0.29' | gawk -F ' ' '{print $2}')
-      #     VERSION=$(echo 'release: groot 0.0.29' | gawk -F ' ' '{print $3}')
-      #     echo "${FORMULA}"
-      #     echo "${VERSION}"
-
-      # - name: Update
-      #   run:
 
       - run: ls -la ./Formula
 
