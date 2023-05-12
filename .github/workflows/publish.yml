@@ -24,7 +24,7 @@ jobs:
 
       - run: git fetch origin main --depth 1
 
-      - run: git checkout main
+      # - run: git checkout main
 
       - name: Set up git
         uses: Homebrew/actions/git-user-config@master
