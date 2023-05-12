@@ -29,21 +29,15 @@ jobs:
           CURR_VER=$(echo $CURR_URL | gawk 'match($0, /v([0-9]+\.[0-9]+\.[0-9]+)/, m) { print m[1] }')
           cp --f ./Formula/${FORMULA}.rb ./Formula/${FORMULA}@${CURR_VER}.rb
 
-      - run: ls -la ./Formula
+      # - run: ls -la ./Formula
 
       - name: Set the new version
         run: git restore --source release Formula/${FORMULA}.rb
-
-      # - run: git branch --show
-      # - run: git branch
-
-      - run: ls -la ./Formula
 
       - name: Set up git user config
         uses: Homebrew/actions/git-user-config@master
 
       # - run: git add .
-
       # - run: git diff --staged
 
       - run: git commit -am "${FORMULA} ${VERSION}"
