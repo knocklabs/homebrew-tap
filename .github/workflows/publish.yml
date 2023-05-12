@@ -62,7 +62,7 @@ jobs:
       - name: Push commits to main
         uses: Homebrew/actions/git-try-push@master
         with:
-          token: ${{ github.token }}
+          token: ${{ secrets.COMMITTER_TOKEN }}
           branch: main
 
       # Close the pull request.
