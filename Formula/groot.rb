@@ -8,6 +8,8 @@ class Groot < Formula
   version "0.0.50"
   sha256 "f606af0e6baf85f820d76b2ebf4384c4240ed44de9c1b07a8d112e3d7cf35b41"
 
+  # foo
+
   def install
     inreplace "bin/groot", /^CLIENT_HOME=/, "export GROOT_OCLIF_CLIENT_HOME=#{lib/"client"}\nCLIENT_HOME="
     libexec.install Dir["*"]
