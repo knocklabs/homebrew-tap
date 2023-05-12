@@ -32,7 +32,8 @@ jobs:
           echo "${CURR_URL}"
           echo "${CURR_VERSION}"
 
-      - run: git checkout ${BRANCH}
+      - run: git branch
+      - run: git checkout ${{ github.event.inputs.branch }}
 
       - run: echo "${{ github.event.inputs.branch }}"
 
