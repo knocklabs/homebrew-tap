@@ -1,12 +1,12 @@
 # Reference:
 # https://github.com/twilio/homebrew-brew/blob/main/Formula/twilio.rb
 
-class Groot < Formula
+class GrootAT0042 < Formula
   desc "I am Groot!"
   homepage "https://github.com/knocklabs/knock-groot"
-  url "https://github.com/knocklabs/knock-groot/releases/download/v0.0.43/groot-v0.0.43-e2b2921-darwin-x64.tar.gz"
-  version "0.0.43"
-  sha256 "30fa398191cec08bf1e4742b1f082fb5bb7c0d4329c8dab22897bfc7157da7d2"
+  url "https://github.com/knocklabs/knock-groot/releases/download/v0.0.42/groot-v0.0.42-ac19af7-darwin-x64.tar.gz"
+  version "0.0.42"
+  sha256 "2a70866d61968ddc29d36833583f769732b97fd2b3cbf19010d61e94ba0812ac"
 
   def install
     inreplace "bin/groot", /^CLIENT_HOME=/, "export GROOT_OCLIF_CLIENT_HOME=#{lib/"client"}\nCLIENT_HOME="
