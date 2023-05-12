@@ -1,17 +1,25 @@
-name: publish package
+name: publish formula
 
 on:
   workflow_dispatch:
+    inputs:
+      branch:
+        required: true
 
 jobs:
   publish:
-    # if: contains(github.event.pull_request.labels.*.name, 'publish')
     runs-on: ubuntu-latest
     env:
       BRANCH: ${{ github.event.pull_request.head.ref }}
     steps:
+      - uses: actions/checkout@v3
+
       - name: Set up git
         uses: Homebrew/actions/git-user-config@master
+
+      - run: ls -la
+      - run: git branch --show
+
 
       # - name: Push commits
       #   uses: Homebrew/actions/git-try-push@master
