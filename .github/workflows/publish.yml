@@ -31,8 +31,6 @@ jobs:
 
       - run: git restore --source release Formula/${FORMULA}.rb
 
-      - run: git commit -am '${FORMULA} ${VERSION}'
-
       # - run: ls -la ./Formula
 
       # - run: ls -la
@@ -54,6 +52,8 @@ jobs:
 
       - name: Set up git user config
         uses: Homebrew/actions/git-user-config@master
+
+      - run: git commit -am '${FORMULA} ${VERSION}'
 
       - name: Push commits
         uses: Homebrew/actions/git-try-push@master
