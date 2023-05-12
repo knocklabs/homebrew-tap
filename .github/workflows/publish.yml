@@ -6,20 +6,12 @@ on:
       - labeled
 
 jobs:
-  pr-pull:
+  publish:
+    if: contains(github.event.pull_request.labels.*.name, 'publish')
     runs-on: ubuntu-latest
     steps:
-      - name: Set up Homebrew
-        uses: Homebrew/actions/setup-homebrew@master
-
       - name: Set up git
         uses: Homebrew/actions/git-user-config@master
-
-      - run: brew test-bot --only-cleanup-before
-      - run: brew test-bot --only-setup
-      - run: brew test-bot --only-tap-syntax
-      - run: brew test-bot --only-formulae
-
 
       # - name: Push commits
       #   uses: Homebrew/actions/git-try-push@master
@@ -32,8 +24,6 @@ jobs:
       #   env:
       #     BRANCH: ${{ github.event.pull_request.head.ref }}
       #   run: git push --delete origin $BRANCH
-
-
 
 # name: brew pr-pull
 #
