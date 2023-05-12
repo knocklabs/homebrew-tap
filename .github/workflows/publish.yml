@@ -50,6 +50,7 @@ jobs:
       - run: git add -A
       - run: git commit -m "${FORMULA} ${VERSION}"
 
+      # This is the "publishing" step, so leave it to last ish.
       - name: Push commits to main
         uses: Homebrew/actions/git-try-push@master
         with:
