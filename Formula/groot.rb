@@ -4,8 +4,8 @@
 class Groot < Formula
   desc "I am Groot!"
   homepage "https://github.com/knocklabs/knock-groot"
-  url "https://github.com/knocklabs/knock-groot/releases/download/v0.0.36/groot-v0.0.36-25b15e0-darwin-x64.tar.gz"
-  sha256 "34816476d2e497da6b037c1236ecdcb17e744753d8e765ec0b8a701e21a1a407"
+  url "https://github.com/knocklabs/knock-groot/releases/download/v0.0.37/groot-v0.0.37-0f7efaa-darwin-x64.tar.gz"
+  sha256 "cb30c49589854db38e144622989c69340391fac63dd02d376f8350f296381747"
 
   def install
     inreplace "bin/groot", /^CLIENT_HOME=/, "export GROOT_OCLIF_CLIENT_HOME=#{lib/"client"}\nCLIENT_HOME="
