@@ -57,9 +57,6 @@ jobs:
           token: ${{ github.token }}
           branch: main
 
-      - run: gh pr merge ${BRANCH} --delete-branch --merge
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      # - name: Delete release branch
-      #   run: git push --delete origin $BRANCH
+      # Close the pull request.
+      - name: Delete release branch
+        run: git push --delete origin $BRANCH
