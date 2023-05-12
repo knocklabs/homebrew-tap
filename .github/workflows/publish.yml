@@ -29,18 +29,14 @@ jobs:
           CURR_VER=$(echo $CURR_URL | gawk 'match($0, /v([0-9]+\.[0-9]+\.[0-9]+)/, m) { print m[1] }')
           cp --f ./Formula/${FORMULA}.rb ./Formula/${FORMULA}@${CURR_VER}.rb
 
-      # - run: ls -la ./Formula
-
       - name: Set the new version
         run: git restore --source release Formula/${FORMULA}.rb
 
       - name: Set up git user config
         uses: Homebrew/actions/git-user-config@master
 
-      # - run: git add .
-      # - run: git diff --staged
-
-      - run: git commit -am "${FORMULA} ${VERSION}"
+      - name: Commit changes
+        run: git commit -am "${FORMULA} ${VERSION}"
 
       - name: Push commits
         uses: Homebrew/actions/git-try-push@master
@@ -48,9 +44,8 @@ jobs:
           token: ${{ github.token }}
           branch: main
 
-      # - name: Delete branch
-      #   if: github.event.pull_request.head.repo.fork == false
-      #   run: git push --delete origin $BRANCH
+      - name: Delete branch
+        run: git push --delete origin $BRANCH
 
 # name: brew pr-pull
 #
