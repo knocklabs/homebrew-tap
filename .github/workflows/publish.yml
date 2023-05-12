@@ -23,7 +23,9 @@ jobs:
       - name: Fetch release branch
         run: git fetch origin ${BRANCH}:release --depth 1
 
-      - name: Pin the current version with the version suffix
+      # This step is based on how Twilio's release script handles versioning:
+      # https://github.com/twilio/homebrew-brew/blob/main/.github/scripts/update-formula.sh
+      - name: Save the current version as suffixed
         run: |
           # Copy the current version of the formula to another formula suffixed
           # with the version number, to support installing different versions.
@@ -45,11 +47,11 @@ jobs:
       - run: git add .
       - run: git commit -m "${FORMULA} ${VERSION}"
 
-      - name: Push commits
+      - name: Push commits to main
         uses: Homebrew/actions/git-try-push@master
         with:
           token: ${{ github.token }}
           branch: main
 
-      - name: Delete branch
+      - name: Delete release branch
         run: git push --delete origin $BRANCH
