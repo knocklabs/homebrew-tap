@@ -23,6 +23,8 @@ jobs:
         #   ref: ${{ github.event.inputs.branch }}
       - run: git fetch origin ${BRANCH} --depth 1
 
+      - run: git checkout ${{ github.event.inputs.branch }}
+      - run: git checkout main
 
       - run: |
           CURR_URL=$(git show main:Formula/${FORMULA}.rb | gawk '/^ *url/ {print $2}')
