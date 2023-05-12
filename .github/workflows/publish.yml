@@ -22,6 +22,13 @@ jobs:
         # with:
         #   ref: ${{ github.event.inputs.branch }}
 
+      - run: |
+          CURR_URL=$(git show main:Formula/${FORMULA}.rb | gawk '/^ *url/ {print $2}')
+          CURR_VER=$($CURR_URL | gawk 'match($0, /v([0-9]+\.[0-9]+\.[0-9]+)/, m) { print m[1] }')
+          mv ./Formula/${FORMULA}.rb ./Formula/${FORMULA}@${CURR_VER}.rb
+
+      - run: ls -la ./Formula
+
       # - run: git fetch origin main --depth 1
       - run: git fetch origin ${{ github.event.inputs.branch }} --depth 1
 
@@ -34,22 +41,17 @@ jobs:
       # - run: ls -la
       - run: git branch --show
 
-      - run: |
-          CURR_URL=$(git show main:Formula/${FORMULA}.rb | gawk '/^ *url/ {print $2}')
-          CURR_VERSION=$(gawk 'match($0, /v([0-9]+\.[0-9]+\.[0-9]+)/, m) { print m[1] }')
-          echo "${CURR_URL}"
-          echo "${CURR_VERSION}"
 
       - run: git branch
       - run: git checkout ${{ github.event.inputs.branch }}
 
       - run: echo "${{ github.event.inputs.branch }}"
 
-      - run: |
-          FORMULA=$(echo 'release: groot 0.0.29' | gawk -F ' ' '{print $2}')
-          VERSION=$(echo 'release: groot 0.0.29' | gawk -F ' ' '{print $3}')
-          echo "${FORMULA}"
-          echo "${VERSION}"
+      # - run: |
+      #     FORMULA=$(echo 'release: groot 0.0.29' | gawk -F ' ' '{print $2}')
+      #     VERSION=$(echo 'release: groot 0.0.29' | gawk -F ' ' '{print $3}')
+      #     echo "${FORMULA}"
+      #     echo "${VERSION}"
 
       # - name: Update
       #   run:
