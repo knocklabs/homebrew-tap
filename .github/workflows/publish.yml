@@ -19,8 +19,6 @@ jobs:
       VERSION: ${{ github.event.inputs.version }}
     steps:
       - uses: actions/checkout@v3
-        # with:
-        #   ref: ${{ github.event.inputs.branch }}
       - run: git fetch origin ${BRANCH}:release --depth 1
 
       # - run: git checkout ${{ github.event.inputs.branch }}
@@ -31,17 +29,14 @@ jobs:
           CURR_VER=$(echo $CURR_URL | gawk 'match($0, /v([0-9]+\.[0-9]+\.[0-9]+)/, m) { print m[1] }')
           mv ./Formula/${FORMULA}.rb ./Formula/${FORMULA}@${CURR_VER}.rb
 
-      - run: ls -la ./Formula
-      # - run: git checkout ${{ github.event.inputs.branch }}
-
+      # - run: ls -la ./Formula
       - run: git restore --source release Formula/${FORMULA}.rb
 
-      - run: ls -la ./Formula
+      # - run: ls -la ./Formula
 
       # - run: ls -la
-      - run: git branch --show
-
-      - run: git branch
+      # - run: git branch --show
+      # - run: git branch
 
         # - run: git checkout ${{ github.event.inputs.branch }}
       # - run: echo "${{ github.event.inputs.branch }}"
@@ -55,16 +50,17 @@ jobs:
       # - name: Update
       #   run:
 
+      - run: git commit -am 'release: ${FORMULA} ${VERSION}'
 
       - name: Set up git user config
         uses: Homebrew/actions/git-user-config@master
 
-      # - name: Push commits
-      #   uses: Homebrew/actions/git-try-push@master
-      #   with:
-      #     token: ${{ github.token }}
-      #     branch: main
-      #
+      - name: Push commits
+        uses: Homebrew/actions/git-try-push@master
+        with:
+          token: ${{ github.token }}
+          branch: main
+
       # - name: Delete branch
       #   if: github.event.pull_request.head.repo.fork == false
       #   run: git push --delete origin $BRANCH
