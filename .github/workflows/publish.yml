@@ -19,19 +19,20 @@ jobs:
       VERSION: ${{ github.event.inputs.version }}
     steps:
       - uses: actions/checkout@v3
-      - run: git fetch origin ${BRANCH}:release --depth 1
 
-      # - run: git checkout ${{ github.event.inputs.branch }}
-      # - run: git checkout main
+      - name: Fetch release branch
+        run: git fetch origin ${BRANCH}:release --depth 1
 
-      - run: |
+      - name: Version the late version
+        run: |
           CURR_URL=$(git show main:Formula/${FORMULA}.rb | gawk '/^ *url/ {print $2}')
           CURR_VER=$(echo $CURR_URL | gawk 'match($0, /v([0-9]+\.[0-9]+\.[0-9]+)/, m) { print m[1] }')
           git mv --f ./Formula/${FORMULA}.rb ./Formula/${FORMULA}@${CURR_VER}.rb
 
       - run: git restore --source release Formula/${FORMULA}.rb
 
-      # - run: ls -la
+      - run: ls -la
+
       # - run: git branch --show
       # - run: git branch
 
