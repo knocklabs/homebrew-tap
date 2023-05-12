@@ -27,16 +27,16 @@ jobs:
         run: |
           CURR_URL=$(git show main:Formula/${FORMULA}.rb | awk '/^ *url/ {print $2}')
           CURR_VER=$(echo $CURR_URL | awk 'match($0, /v([0-9]+\.[0-9]+\.[0-9]+)/, m) { print m[1] }')
-          echo $CURR_URL
-          echo $CURR_VER
           cp --f ./Formula/${FORMULA}.rb ./Formula/${FORMULA}@${CURR_VER}.rb
           CLASSNAME=$(echo $FORMULA | sed -e "s/\b./\u&/g")AT$(echo $CURR_VER | tr -dc '[:alnum:]\n\r' | sed 's/[[:alpha:]]/\U&/')
           sed -i.bak "s/^class [^ ]*/class $CLASSNAME/" Formula/$FORMULA@$CURR_VER.rb
 
-      - run: ls -la ./Formula
+      # - run: ls -la ./Formula
 
-      - name: Set the new version
+      - name: Get the new version from release branch
         run: git restore --source release Formula/${FORMULA}.rb
+
+      # - name: Set the new version
 
       - name: Set up git user config
         uses: Homebrew/actions/git-user-config@master
