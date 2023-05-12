@@ -23,10 +23,10 @@ jobs:
       - run: git branch --show
 
       - run: |
-        CURR_URL=$(git show main:Formula/groot.rb | gawk '/^ *url/ {print $2}')
-        CURR_VERSION=$(gawk 'match($0, /v([0-9]+\.[0-9]+\.[0-9]+)/, m) { print m[1] }')
-        echo "${CURR_URL}"
-        echo "${CURR_VERSION}"
+          CURR_URL=$(git show main:Formula/${FORMULA}.rb | gawk '/^ *url/ {print $2}')
+          CURR_VERSION=$(gawk 'match($0, /v([0-9]+\.[0-9]+\.[0-9]+)/, m) { print m[1] }')
+          echo "${CURR_URL}"
+          echo "${CURR_VERSION}"
 
       - run: git checkout ${BRANCH}
 
