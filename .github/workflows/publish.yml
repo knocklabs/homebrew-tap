@@ -56,7 +56,7 @@ jobs:
           token: ${{ github.token }}
           branch: main
 
-      - run: gh pr merge ${BRANCH} --delete-branch
+      - run: gh pr merge ${BRANCH} --delete-branch --squash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
