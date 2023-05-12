@@ -22,6 +22,10 @@ jobs:
         with:
           ref: ${{ github.event.inputs.branch }}
 
+      - run: git fetch origin main --depth 1
+
+      - run: git checkout main --no-overlay
+
       - name: Set up git
         uses: Homebrew/actions/git-user-config@master
 
