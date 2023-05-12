@@ -19,12 +19,14 @@ jobs:
       VERSION: ${{ github.event.inputs.version }}
     steps:
       - uses: actions/checkout@v3
-        with:
-          ref: ${{ github.event.inputs.branch }}
+        # with:
+        #   ref: ${{ github.event.inputs.branch }}
 
-      - run: git fetch origin main --depth 1
+      # - run: git fetch origin main --depth 1
+      - run: git fetch origin ${{ github.event.inputs.branch }} --depth 1
 
       # - run: git checkout main
+      - run: git checkout ${{ github.event.inputs.branch }}
 
       - name: Set up git
         uses: Homebrew/actions/git-user-config@master
