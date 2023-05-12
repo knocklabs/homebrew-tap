@@ -9,6 +9,8 @@ jobs:
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
+      - uses: actions/checkout@v3
+
       # - name: Set up Homebrew
       #   id: set-up-homebrew
       #   uses: Homebrew/actions/setup-homebrew@master
@@ -33,7 +35,7 @@ jobs:
       #
       # - run: brew test-bot --only-formulae
 
-      - run: ls
+      - run: ls -la
 
       - name: Kick off publish workflow
         if: startsWith(github.event.pull_request.title, 'release:')
