@@ -21,10 +21,10 @@ jobs:
       - uses: actions/checkout@v3
         # with:
         #   ref: ${{ github.event.inputs.branch }}
-      - run: git fetch origin ${BRANCH} --depth 1
+      - run: git fetch origin ${BRANCH}:release --depth 1
 
-      - run: git checkout ${{ github.event.inputs.branch }}
-      - run: git checkout main
+      # - run: git checkout ${{ github.event.inputs.branch }}
+      # - run: git checkout main
 
       - run: |
           CURR_URL=$(git show main:Formula/${FORMULA}.rb | gawk '/^ *url/ {print $2}')
@@ -34,7 +34,7 @@ jobs:
       - run: ls -la ./Formula
       # - run: git checkout ${{ github.event.inputs.branch }}
 
-      - run: git restore --source ${BRANCH} Formula/${FORMULA}.rb
+      - run: git restore --source release Formula/${FORMULA}.rb
 
       - run: ls -la ./Formula
 
