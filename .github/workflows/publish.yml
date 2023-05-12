@@ -46,6 +46,11 @@ jobs:
 
       - name: Set up git user config
         uses: Homebrew/actions/git-user-config@master
+        with:
+          username: thomaswhyyou
+
+      # - run: git config --global user.email "thomaswhyyou@gmail.com"
+      # - run: git config --global user.name "thomaswhyyou"
 
       - run: git add -A
       - run: git commit -m "${FORMULA} ${VERSION}"
