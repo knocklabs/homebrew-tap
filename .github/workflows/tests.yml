@@ -33,9 +33,7 @@ jobs:
 
       - run: brew test-bot --only-tap-syntax
 
-      # NOTE: Commented out for now because it is yelling about needing "versioned
-      # aliases", which we probably don't need.
-      # - run: brew test-bot --only-formulae
+      - run: brew test-bot --only-formulae
 
       - name: Kick off publish workflow
         if: startsWith(github.event.pull_request.title, 'release:')
