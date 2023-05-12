@@ -10,6 +10,9 @@ on:
       version:
         required: true
 
+# "Publishes" a new formula version via a "release" branch. Saves the current
+# version as a versioned formula (e.g. foo@0.0.7), and updates the main formula
+# file (e.g. foo.rb) with the new version.
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -44,21 +47,17 @@ jobs:
       - name: Copy over the Aliases directory from release branch
         run: git restore --source release Aliases/
 
+      # TODO: Swap out the committer token to use a new dedicated user, and also
+      # the user profile.
       - name: Set up git user config
         uses: Homebrew/actions/git-user-config@master
         with:
           username: thomaswhyyou
 
-      - run: git config user.email
-      - run: git config user.name
-
-      # - run: git config --global user.email "thomaswhyyou@gmail.com"
-      # - run: git config --global user.name "thomaswhyyou"
-
       - run: git add -A
       - run: git commit -m "${FORMULA} ${VERSION}"
 
-      # This is the "publishing" step, so leave it to last ish.
+      # This is the "publishing" step.
       - name: Push commits to main
         uses: Homebrew/actions/git-try-push@master
         with:

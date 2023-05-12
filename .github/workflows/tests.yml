@@ -3,34 +3,38 @@ name: brew test-bot
 on:
   pull_request:
 
+# Runs a series of brew tests on new pull requests. If this PR is marked for
+# release, then kick off the publish workflow at the end.
 jobs:
   tests:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
 
-      # - name: Set up Homebrew
-      #   id: set-up-homebrew
-      #   uses: Homebrew/actions/setup-homebrew@master
-      #
-      # - name: Cache Homebrew Bundler RubyGems
-      #   id: cache
-      #   uses: actions/cache@v3
-      #   with:
-      #     path: ${{ steps.set-up-homebrew.outputs.gems-path }}
-      #     key: ${{ runner.os }}-rubygems-${{ steps.set-up-homebrew.outputs.gems-hash }}
-      #     restore-keys: ${{ runner.os }}-rubygems-
-      #
-      # - name: Install Homebrew Bundler RubyGems
-      #   if: steps.cache.outputs.cache-hit != 'true'
-      #   run: brew install-bundler-gems
-      #
-      # - run: brew test-bot --only-cleanup-before
-      #
-      # - run: brew test-bot --only-setup
-      #
-      # - run: brew test-bot --only-tap-syntax
-      #
+      - name: Set up Homebrew
+        id: set-up-homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Cache Homebrew Bundler RubyGems
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.set-up-homebrew.outputs.gems-path }}
+          key: ${{ runner.os }}-rubygems-${{ steps.set-up-homebrew.outputs.gems-hash }}
+          restore-keys: ${{ runner.os }}-rubygems-
+
+      - name: Install Homebrew Bundler RubyGems
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: brew install-bundler-gems
+
+      - run: brew test-bot --only-cleanup-before
+
+      - run: brew test-bot --only-setup
+
+      - run: brew test-bot --only-tap-syntax
+
+      # NOTE: Commented out for now because it is yelling about needing "versioned
+      # aliases", which we probably don't need.
       # - run: brew test-bot --only-formulae
 
       - name: Kick off publish workflow
