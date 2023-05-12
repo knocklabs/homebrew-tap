@@ -23,20 +23,21 @@ jobs:
       - name: Fetch release branch
         run: git fetch origin ${BRANCH}:release --depth 1
 
-      - name: Pin the current version
+      - name: Pin the current version with the version suffix
         run: |
+          # Copy the current version of the formula to another formula suffixed
+          # with the version number, to support installing different versions.
+          # For example: Formula/foo.rb -> Formula/foo@0.0.12.rb
           CURR_URL=$(git show main:Formula/${FORMULA}.rb | awk '/^ *url/ {print $2}')
           CURR_VER=$(echo $CURR_URL | awk 'match($0, /v([0-9]+\.[0-9]+\.[0-9]+)/, m) { print m[1] }')
           cp --f ./Formula/${FORMULA}.rb ./Formula/${FORMULA}@${CURR_VER}.rb
+          # It seems homebrew expects a class name for each formula to be
+          # consistent with its file name, so also update the class name.
           CLASSNAME=$(echo $FORMULA | sed -e "s/\b./\u&/g")AT$(echo $CURR_VER | tr -dc '[:alnum:]\n\r' | sed 's/[[:alpha:]]/\U&/')
           sed -i.bak "s/^class [^ ]*/class $CLASSNAME/" Formula/$FORMULA@$CURR_VER.rb
 
-      # - run: ls -la ./Formula
-
       - name: Get the new version from release branch
         run: git restore --source release Formula/${FORMULA}.rb
-
-      # - name: Set the new version
 
       - name: Set up git user config
         uses: Homebrew/actions/git-user-config@master
