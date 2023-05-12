@@ -21,6 +21,8 @@ jobs:
       - uses: actions/checkout@v3
         # with:
         #   ref: ${{ github.event.inputs.branch }}
+      - run: git fetch origin ${BRANCH} --depth 1
+
 
       - run: |
           CURR_URL=$(git show main:Formula/${FORMULA}.rb | gawk '/^ *url/ {print $2}')
@@ -28,24 +30,19 @@ jobs:
           mv ./Formula/${FORMULA}.rb ./Formula/${FORMULA}@${CURR_VER}.rb
 
       - run: ls -la ./Formula
+      # - run: git checkout ${{ github.event.inputs.branch }}
 
-      # - run: git fetch origin main --depth 1
-      - run: git fetch origin ${{ github.event.inputs.branch }} --depth 1
+      - run: git restore --source ${BRANCH} Formula/${FORMULA}.rb
 
-      # - run: git checkout main
-      - run: git checkout ${{ github.event.inputs.branch }}
-
-      - name: Set up git
-        uses: Homebrew/actions/git-user-config@master
+      - run: ls -la ./Formula
 
       # - run: ls -la
       - run: git branch --show
 
-
       - run: git branch
-      - run: git checkout ${{ github.event.inputs.branch }}
 
-      - run: echo "${{ github.event.inputs.branch }}"
+        # - run: git checkout ${{ github.event.inputs.branch }}
+      # - run: echo "${{ github.event.inputs.branch }}"
 
       # - run: |
       #     FORMULA=$(echo 'release: groot 0.0.29' | gawk -F ' ' '{print $2}')
@@ -56,6 +53,9 @@ jobs:
       # - name: Update
       #   run:
 
+
+      - name: Set up git user config
+        uses: Homebrew/actions/git-user-config@master
 
       # - name: Push commits
       #   uses: Homebrew/actions/git-try-push@master
