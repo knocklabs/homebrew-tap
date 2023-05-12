@@ -1,0 +1,69 @@
+name: publish formula
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        required: true
+      formula:
+        required: true
+      version:
+        required: true
+
+# "Publishes" a new formula version via a "release" branch. Saves the current
+# version as a versioned formula (e.g. foo@0.0.7), and updates the main formula
+# file (e.g. foo.rb) with the new version.
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      BRANCH: ${{ github.event.inputs.branch }}
+      FORMULA: ${{ github.event.inputs.formula }}
+      VERSION: ${{ github.event.inputs.version }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Fetch release branch
+        run: git fetch origin ${BRANCH}:release --depth 1
+
+      # This step is based on how Twilio's release script handles versioning:
+      # https://github.com/twilio/homebrew-brew/blob/main/.github/scripts/update-formula.sh
+      - name: Save the current version as suffixed
+        run: |
+          # Copy the current version of the formula to another formula suffixed
+          # with the version number, to support installing different versions.
+          # For example: Formula/foo.rb -> Formula/foo@0.0.12.rb
+          CURR_URL=$(git show main:Formula/${FORMULA}.rb | awk '/^ *url/ {print $2}')
+          CURR_VER=$(echo $CURR_URL | awk 'match($0, /v([0-9]+\.[0-9]+\.[0-9]+)/, m) { print m[1] }')
+          cp --f ./Formula/${FORMULA}.rb ./Formula/${FORMULA}@${CURR_VER}.rb
+          # It seems homebrew expects a class name for each formula to be
+          # consistent with its file name, so also update the class name.
+          CLASSNAME=$(echo $FORMULA | sed -e "s/\b./\u&/g")AT$(echo $CURR_VER | tr -dc '[:alnum:]\n\r' | sed 's/[[:alpha:]]/\U&/')
+          sed -i.bak "s/^class [^ ]*/class $CLASSNAME/" Formula/$FORMULA@$CURR_VER.rb
+
+      - name: Get the new version from release branch
+        run: git restore --source release Formula/${FORMULA}.rb
+
+      - name: Copy over the Aliases directory from release branch
+        run: git restore --source release Aliases/
+
+      # TODO: Swap out the committer token to use a new dedicated user, and also
+      # the user profile.
+      - name: Set up git user config
+        uses: Homebrew/actions/git-user-config@master
+        with:
+          username: thomaswhyyou
+
+      - run: git add -A
+      - run: git commit -m "${FORMULA} ${VERSION}"
+
+      # This is the "publishing" step.
+      - name: Push commits to main
+        uses: Homebrew/actions/git-try-push@master
+        with:
+          token: ${{ secrets.COMMITTER_TOKEN }}
+          branch: main
+
+      # Close the pull request.
+      - name: Delete release branch
+        run: git push --delete origin $BRANCH
