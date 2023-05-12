@@ -17,14 +17,24 @@ jobs:
       - name: Set up git
         uses: Homebrew/actions/git-user-config@master
 
-      # - run: ls -la
-      # - run: git branch --show
+      - run: git checkout ${{ github.event.inputs.branch }}
 
-      # - run: git checkout main
+      # - run: ls -la
+      - run: git branch --show
+
+      - run: |
+        CURR_URL=$(git show main:Formula/${{ github.event.inputs.formula }}.rb | gawk '/^ *url/ {print $2}')
+        CURR_VERSION=$(gawk 'match($0, /v([0-9]+\.[0-9]+\.[0-9]+)/, m) { print m[1] }')
+        echo "${CURR_URL}"
+        echo "${CURR_VERSION}"
 
       - run: echo "${{ github.event.inputs.branch }}"
       - run: echo "${{ github.event.inputs.version }}"
       - run: echo "${{ github.event.inputs.formula }}"
+
+      # - name: Update
+      #   run:
+
 
       # - name: Push commits
       #   uses: Homebrew/actions/git-try-push@master
