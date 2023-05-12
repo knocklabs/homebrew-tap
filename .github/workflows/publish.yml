@@ -29,7 +29,7 @@ jobs:
           CURR_VER=$(echo $CURR_URL | gawk 'match($0, /v([0-9]+\.[0-9]+\.[0-9]+)/, m) { print m[1] }')
           git mv --f ./Formula/${FORMULA}.rb ./Formula/${FORMULA}@${CURR_VER}.rb
 
-      - run: git restore --source release Formula/${FORMULA}.rb
+      - run: git checkout release Formula/${FORMULA}.rb
 
       - run: ls -la
 
