@@ -9,6 +9,8 @@ jobs:
   publish:
     if: contains(github.event.pull_request.labels.*.name, 'publish')
     runs-on: ubuntu-latest
+    env:
+      BRANCH: ${{ github.event.pull_request.head.ref }}
     steps:
       - name: Set up git
         uses: Homebrew/actions/git-user-config@master
@@ -21,8 +23,6 @@ jobs:
       #
       # - name: Delete branch
       #   if: github.event.pull_request.head.repo.fork == false
-      #   env:
-      #     BRANCH: ${{ github.event.pull_request.head.ref }}
       #   run: git push --delete origin $BRANCH
 
 # name: brew pr-pull
