@@ -33,6 +33,8 @@ jobs:
       #
       # - run: brew test-bot --only-formulae
 
+      - run: ls
+
       - name: Kick off publish workflow
         if: startsWith(github.event.pull_request.title, 'release:')
         run: gh workflow run publish.yml
