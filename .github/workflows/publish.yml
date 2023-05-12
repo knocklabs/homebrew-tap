@@ -41,6 +41,9 @@ jobs:
       - name: Get the new version from release branch
         run: git restore --source release Formula/${FORMULA}.rb
 
+      - name: Copy over the Aliases directory from release branch
+        run: git restore --source release Aliases/
+
       - name: Set up git user config
         uses: Homebrew/actions/git-user-config@master
 
