@@ -24,7 +24,7 @@ jobs:
 
       - run: |
           CURR_URL=$(git show main:Formula/${FORMULA}.rb | gawk '/^ *url/ {print $2}')
-          CURR_VER=$($CURR_URL | gawk 'match($0, /v([0-9]+\.[0-9]+\.[0-9]+)/, m) { print m[1] }')
+          CURR_VER=$(echo $CURR_URL | gawk 'match($0, /v([0-9]+\.[0-9]+\.[0-9]+)/, m) { print m[1] }')
           mv ./Formula/${FORMULA}.rb ./Formula/${FORMULA}@${CURR_VER}.rb
 
       - run: ls -la ./Formula
