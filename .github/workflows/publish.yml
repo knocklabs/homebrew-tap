@@ -27,7 +27,7 @@ jobs:
       - run: |
           CURR_URL=$(git show main:Formula/${FORMULA}.rb | gawk '/^ *url/ {print $2}')
           CURR_VER=$(echo $CURR_URL | gawk 'match($0, /v([0-9]+\.[0-9]+\.[0-9]+)/, m) { print m[1] }')
-          git mv --force ./Formula/${FORMULA}.rb ./Formula/${FORMULA}@${CURR_VER}.rb
+          mv --f ./Formula/${FORMULA}.rb ./Formula/${FORMULA}@${CURR_VER}.rb
 
       - run: git restore --source release Formula/${FORMULA}.rb
 
@@ -53,7 +53,10 @@ jobs:
         uses: Homebrew/actions/git-user-config@master
 
       - run: git add .
-      - run: git commit -am "${FORMULA} ${VERSION}"
+
+      - run: git diff --staged
+
+      - run: git commit -m "${FORMULA} ${VERSION}"
 
       - name: Push commits
         uses: Homebrew/actions/git-try-push@master
