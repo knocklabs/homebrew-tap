@@ -47,12 +47,10 @@ jobs:
       - name: Copy over the Aliases directory from release branch
         run: git restore --source release Aliases/
 
-      # TODO: Swap out the committer token to use a new dedicated user, and also
-      # the user profile.
       - name: Set up git user config
         uses: Homebrew/actions/git-user-config@master
         with:
-          username: thomaswhyyou
+          username: knock-eng-bot
 
       - run: git add -A
       - run: git commit -m "${FORMULA} ${VERSION}"
