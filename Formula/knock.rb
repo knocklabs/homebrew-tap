@@ -2,7 +2,7 @@
 # https://github.com/twilio/homebrew-brew/blob/main/Formula/twilio.rb
 
 class Knock < Formula
-  desc "Knock CLI"
+  desc "Build and manage your notifications with Knock directly from the command-line"
   homepage "https://github.com/knocklabs/knock-cli"
   url "https://github.com/knocklabs/knock-cli/releases/download/v0.1.0/knock-v0.1.0-08af474-darwin-x64.tar.gz"
   version "0.1.0"
