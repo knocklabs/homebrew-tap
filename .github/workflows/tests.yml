@@ -39,6 +39,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: [run-tests]
     steps:
+      - uses: actions/checkout@v3
+
       - name: Kick off publish workflow
         if: startsWith(github.event.pull_request.title, 'release:')
         run: |
