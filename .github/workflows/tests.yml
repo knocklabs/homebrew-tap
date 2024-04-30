@@ -6,7 +6,7 @@ on:
 jobs:
   # Runs a series of brew tests on new pull requests.
   run-tests:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 
