@@ -42,10 +42,12 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Kick off publish workflow
-        if: startsWith(github.event.pull_request.title, 'release:')
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        if: startsWith(env.PR_TITLE, 'release:')
         run: |
-          FORMULA=$(echo '${{ github.event.pull_request.title }}' | awk -F ' ' '{print $2}')
-          VERSION=$(echo '${{ github.event.pull_request.title }}' | awk -F ' ' '{print $3}')
+          FORMULA=$(echo "$PR_TITLE" | awk -F ' ' '{print $2}')
+          VERSION=$(echo "$PR_TITLE" | awk -F ' ' '{print $3}')
           gh workflow run publish.yml -f branch="${{ github.event.pull_request.head.ref }}" -f formula="${FORMULA}" -f version="${VERSION}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

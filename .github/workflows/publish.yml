@@ -24,7 +24,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Fetch release branch
-        run: git fetch origin ${BRANCH}:release --depth 1
+        run: git fetch origin "${BRANCH}":release --depth 1
 
       # This step is based on how Twilio's release script handles versioning:
       # https://github.com/twilio/homebrew-brew/blob/main/.github/scripts/update-formula.sh
@@ -38,6 +38,7 @@ jobs:
           cp --f ./Formula/"${FORMULA}".rb ./Formula/"${FORMULA}"@"${CURR_VER}".rb
           # It seems homebrew expects a class name for each formula to be
           # consistent with its file name, so also update the class name.
+          # shellcheck disable=SC2001
           CLASSNAME=$(echo "$FORMULA" | sed -e "s/\b./\u&/g")AT$(echo "$CURR_VER" | tr -dc '[:alnum:]\n\r' | sed 's/[[:alpha:]]/\U&/')
           sed -i.bak "s/^class [^ ]*/class $CLASSNAME/" Formula/"$FORMULA"@"$CURR_VER".rb
 
