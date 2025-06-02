@@ -21,7 +21,7 @@ jobs:
       FORMULA: ${{ github.event.inputs.formula }}
       VERSION: ${{ github.event.inputs.version }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Fetch release branch
         run: git fetch origin ${BRANCH}:release --depth 1
