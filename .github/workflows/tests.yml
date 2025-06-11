@@ -43,9 +43,11 @@ jobs:
 
       - name: Kick off publish workflow
         if: startsWith(github.event.pull_request.title, 'release:')
-        run: |
-          FORMULA=$(echo '${{ github.event.pull_request.title }}' | awk -F ' ' '{print $2}')
-          VERSION=$(echo '${{ github.event.pull_request.title }}' | awk -F ' ' '{print $3}')
-          gh workflow run publish.yml -f branch=${{ github.event.pull_request.head.ref }} -f formula=${FORMULA} -f version=${VERSION}
         env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          FORMULA=$(echo "$PR_TITLE" | awk -F ' ' '{print $2}')
+          VERSION=$(echo "$PR_TITLE" | awk -F ' ' '{print $3}')
+          gh workflow run publish.yml -f branch="$PR_HEAD_REF" -f formula="${FORMULA}" -f version="${VERSION}"
