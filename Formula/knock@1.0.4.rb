@@ -1,12 +1,12 @@
 # Reference:
 # https://github.com/twilio/homebrew-brew/blob/main/Formula/twilio.rb
 
-class Knock < Formula
+class KnockAT104 < Formula
   desc "Build and manage your notifications with Knock directly from the command-line"
   homepage "https://github.com/knocklabs/knock-cli"
-  url "https://github.com/knocklabs/knock-cli/releases/download/v1.0.5/knock-v1.0.5-8f555bb-darwin-x64.tar.gz"
-  version "1.0.5"
-  sha256 "402c4f7cf0635030ece522420af1b23c587917a2bce4c3389c4f3cb4a2045aa4"
+  url "https://github.com/knocklabs/knock-cli/releases/download/v1.0.4/knock-v1.0.4-ddba25c-darwin-x64.tar.gz"
+  version "1.0.4"
+  sha256 "9c26c870d6a45c392f5c96aa60809f32cad7cc70162ce7b29c9051152576ac87"
 
   def install
     inreplace "bin/knock", /^CLIENT_HOME=/, "export KNOCK_OCLIF_CLIENT_HOME=#{lib/"client"}\nCLIENT_HOME="
