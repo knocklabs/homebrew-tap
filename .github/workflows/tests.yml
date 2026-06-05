@@ -7,6 +7,11 @@ jobs:
   # Runs a series of brew tests on new pull requests.
   run-tests:
     runs-on: ubuntu-latest
+    env:
+      # The Linux sandbox requires a rootless `bwrap` (Bubblewrap), which isn't
+      # usable on the ubuntu-latest runner (Ubuntu 24.04 restricts unprivileged
+      # user namespaces). Disable it so `brew doctor` / test-bot don't fail.
+      HOMEBREW_NO_SANDBOX_LINUX: 1
     steps:
       - uses: actions/checkout@v4
 
