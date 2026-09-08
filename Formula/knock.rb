@@ -4,8 +4,8 @@
 class Knock < Formula
   desc "Build and manage your notifications with Knock directly from the command-line"
   homepage "https://github.com/knocklabs/knock-cli"
-  url "https://github.com/knocklabs/knock-cli/releases/download/v1.2.3/knock-v1.2.3-4f6f3ab-darwin-x64.tar.gz"
-  sha256 "736c5a3695f692ef476856c1bf0e2f0d472bf2a832f76e3ace256137f722aeb8"
+  url "https://github.com/knocklabs/knock-cli/releases/download/v1.3.0/knock-v1.3.0-1862623-darwin-x64.tar.gz"
+  sha256 "8c66276cf8e82b0d1d13600d198643d718738169b0faf04baa4fbd60b91a6896"
 
   def install
     inreplace "bin/knock", /^CLIENT_HOME=/, "export KNOCK_OCLIF_CLIENT_HOME=#{lib/"client"}\nCLIENT_HOME="
