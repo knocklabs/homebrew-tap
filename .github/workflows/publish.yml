@@ -48,7 +48,7 @@ jobs:
         run: git restore --source release Aliases/
 
       - name: Set up git user config
-        uses: Homebrew/actions/git-user-config@master
+        uses: Homebrew/actions/git-user-config@eb02c69dbabdb66ff183c614f4ce7ab3c077592c # 2026.10.12.1
         with:
           username: knock-eng-bot
 
@@ -57,7 +57,7 @@ jobs:
 
       # This is the "publishing" step.
       - name: Push commits to main
-        uses: Homebrew/actions/git-try-push@master
+        uses: Homebrew/actions/git-try-push@eb02c69dbabdb66ff183c614f4ce7ab3c077592c # 2026.10.12.1
         with:
           token: ${{ secrets.COMMITTER_TOKEN }}
           branch: main
