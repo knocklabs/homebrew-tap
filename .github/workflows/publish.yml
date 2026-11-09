@@ -22,6 +22,14 @@ jobs:
       VERSION: ${{ github.event.inputs.version }}
     steps:
       - uses: actions/checkout@v7
+        with:
+          # checkout@v6+ stores its auth header in a separate includeIf config
+          # file, so the header git-try-push sets below is added alongside it
+          # rather than replacing it. GitHub then rejects every request with
+          # `Duplicate header: "Authorization"`. The repo is public, so the
+          # fetch below doesn't need credentials; git-try-push supplies the
+          # COMMITTER_TOKEN for the push and the branch delete.
+          persist-credentials: false
 
       - name: Fetch release branch
         run: git fetch origin "${BRANCH}:release" --depth 1
